@@ -250,7 +250,7 @@ export default function StorefrontPreview() {
     if (extractedPalette) setPalette(extractedPalette);
   };
 
-  const mailtoHref = `mailto:jack@homerfamily.com?subject=Website%20inquiry:%20${encodeURIComponent(businessName)}`;
+  const contactHref = `/contact?subject=${encodeURIComponent(`Website inquiry: ${businessName || DEFAULT_NAME}`)}`;
 
   const templateProps = {
     businessName: businessName || DEFAULT_NAME,
@@ -400,7 +400,7 @@ export default function StorefrontPreview() {
         {/* CTA */}
         <div className="text-center">
           <a
-            href={mailtoHref}
+            href={contactHref}
             className="inline-block rounded-xl bg-accent px-8 py-3 text-sm font-semibold text-bg hover:bg-accent-hover transition-colors"
           >
             Like what you see? I can build this for real.
