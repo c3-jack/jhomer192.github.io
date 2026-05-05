@@ -2,13 +2,19 @@
 import Base from '../layouts/Base.astro';
 import StorefrontPreview from '../components/StorefrontPreview';
 
-// Stripe payment links. Regenerate with setup-stripe.ts in the tableside repo.
+// CTAs route through the contact form — interest pings Jack on Telegram, then
+// he onboards via `npm run trial:grant` (180-day free trial). When Stripe live
+// keys land, swap these for buy.stripe.com URLs (regenerate with setup-stripe.ts
+// in the tableside repo) — until then the test-mode Payment Links here were
+// silently broken (no client_id metadata, no real charge, no signal back).
+const planContactHref = (plan: string) =>
+  `/contact?subject=${encodeURIComponent(`Plan inquiry: ${plan}`)}`;
 const LINKS = {
-  siteBuild: 'https://buy.stripe.com/test_eVq4gBewY5WbefPdyo2Ji00',
-  siteBuildBundle: 'https://buy.stripe.com/test_4gM4gBewYbgvgnXeCs2Ji01',
-  hostingOnly: 'https://buy.stripe.com/test_dRm8wR4WofwLgnXdyo2Ji02',
-  reviewAutoreply: 'https://buy.stripe.com/test_fZudRb74wgAP8Vv51S2Ji03',
-  fullBundle: 'https://buy.stripe.com/test_bJe5kF3Sk70fgnX3XO2Ji04',
+  siteBuild: planContactHref('Website only — $100 one-time'),
+  siteBuildBundle: planContactHref('Hosting + website — $5/mo + $50 build'),
+  hostingOnly: planContactHref('Hosting + website — $5/mo'),
+  reviewAutoreply: planContactHref('Review auto-reply add-on — $20/mo'),
+  fullBundle: planContactHref('Everything bundle — $30/mo + $50 build'),
 };
 
 const plans = [
@@ -25,7 +31,7 @@ const plans = [
       'Google review auto-reply (AI drafts, you approve or let us post)',
       'Business email: yourname@yourdomain.com',
     ],
-    cta: { label: 'Subscribe — $30/mo', href: LINKS.fullBundle },
+    cta: { label: 'Get started — $30/mo', href: LINKS.fullBundle },
     footnote: 'One-time $50 to build the site. After that, one bill a month.',
   },
   {
@@ -39,7 +45,7 @@ const plans = [
       'Cloudflare hosting + SSL + CDN',
       'Uptime monitoring',
     ],
-    cta: { label: 'Subscribe hosting — $5/mo', href: LINKS.hostingOnly },
+    cta: { label: 'Get started — $5/mo', href: LINKS.hostingOnly },
     secondary: { label: 'One-time build first — $50', href: LINKS.siteBuildBundle },
   },
   {
@@ -53,7 +59,7 @@ const plans = [
       'Dashboard to approve, reject, or edit drafts',
       'Handles 1-star reviews with care',
     ],
-    cta: { label: 'Subscribe add-on — $20/mo', href: LINKS.reviewAutoreply },
+    cta: { label: 'Get started — $20/mo', href: LINKS.reviewAutoreply },
   },
   {
     tier: 'Website only — no subscription',
@@ -65,7 +71,7 @@ const plans = [
       'No recurring fee',
       'No vendor lock-in',
     ],
-    cta: { label: 'Buy a one-time build — $100', href: LINKS.siteBuild },
+    cta: { label: 'Inquire — $100 one-time', href: LINKS.siteBuild },
   },
 ];
 ---
@@ -151,8 +157,8 @@ const plans = [
     <div class="rounded-2xl border border-border bg-surface p-8 mb-8">
       <h2 class="text-xl font-semibold text-text mb-4">How it works</h2>
       <ol class="text-sm text-text-muted space-y-3 list-decimal list-inside">
-        <li><span class="text-text">Pick a plan above.</span> Pay through Stripe — you get a receipt immediately.</li>
-        <li><span class="text-text">I reach out within 24 hours</span> to collect the details (logo, photos, hours, menu or services).</li>
+        <li><span class="text-text">Pick a plan above</span> and tell me a bit about your business. I get a notification immediately.</li>
+        <li><span class="text-text">I reach out within 24 hours</span> to confirm the plan and collect the details (logo, photos, hours, menu or services).</li>
         <li><span class="text-text">First draft within a week.</span> You tell me what to change. I ship the fix same day.</li>
         <li><span class="text-text">Site goes live.</span> If you signed up for review auto-reply, we also connect your Google Business Profile (5-min walkthrough).</li>
         <li><span class="text-text">Cancel anytime.</span> I don't hostage-hold your domain or your site.</li>
