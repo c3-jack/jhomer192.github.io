@@ -15,7 +15,12 @@ function isActive(href: string) {
 
 <nav class="sticky top-0 z-50 w-full border-b border-border bg-bg/90 backdrop-blur">
   <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 py-4">
-    <a href="/" class="text-lg font-semibold text-text hover:text-accent transition-colors">
+    <a
+      href="/"
+      class="text-lg font-semibold text-text hover:text-accent transition-colors"
+      data-umami-event="nav-click"
+      data-umami-event-target="home"
+    >
       Jack Homer
     </a>
     <div class="flex flex-wrap items-center gap-6">
@@ -29,6 +34,8 @@ function isActive(href: string) {
                   ? 'text-accent font-medium'
                   : 'text-text-muted'
               }`}
+              data-umami-event="nav-click"
+              data-umami-event-target={label.toLowerCase()}
             >
               {label}
             </a>

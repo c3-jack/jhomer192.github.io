@@ -3,11 +3,16 @@ import Base from '../layouts/Base.astro';
 
 const projects = [
   {
-    title: 'Bracketeering',
-    description: 'Beli for songs. Connect Spotify, get a 64- or 128-track pool from your library, and vote "this or that" matchups until you have a real top 10. Group mode lets up to 4 friends co-curate a bracket. Top picks save back to Spotify as a playlist.',
+    title: 'Songrank',
+    description: 'Beli for songs. Connect Spotify, get a 64- or 128-track pool from your library, and vote "this or that" matchups until you have a real top 10. Group mode lets up to 4 friends co-curate a ranking. Top picks save back to Spotify as a playlist.',
     live: 'https://jhomer192.github.io/bracketeering/',
     repo: 'https://github.com/jhomer192/bracketeering',
     screenshot: '/screenshots/bracketeering.webp',
+  },
+  {
+    title: 'Auto Applier',
+    description: 'Telegram bot that finds engineering jobs, writes tailored applications, and submits them while you sleep. Text a URL or "go find me jobs" — Claude reads the posting, decides if it fits, fills the form, and applies. Greenhouse / Lever / Ashby / Workable / Wellfound / LinkedIn. Runs on a $6 VPS.',
+    repo: 'https://github.com/jhomer192/auto-applier',
   },
   {
     title: 'WikiGame',
@@ -83,7 +88,14 @@ const projects = [
       {projects.map((project) => (
         <div class="flex flex-col rounded-2xl border border-border bg-surface overflow-hidden transition-all duration-200 hover:border-accent/50 hover:bg-surface-hover hover:-translate-y-1 hover:shadow-lg hover:shadow-accent/10">
           {project.screenshot ? (
-            <a href={project.live ?? project.repo} target="_blank" rel="noopener noreferrer" class="block overflow-hidden">
+            <a
+              href={project.live ?? project.repo}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block overflow-hidden"
+              data-umami-event="project-screenshot-click"
+              data-umami-event-project={project.title}
+            >
               <img
                 src={project.screenshot}
                 alt={`${project.title} screenshot`}
@@ -106,6 +118,8 @@ const projects = [
                   target="_blank"
                   rel="noopener noreferrer"
                   class="text-accent hover:text-accent-hover transition-colors"
+                  data-umami-event="project-live-click"
+                  data-umami-event-project={project.title}
                 >
                   Live &rarr;
                 </a>
@@ -115,6 +129,8 @@ const projects = [
                 target="_blank"
                 rel="noopener noreferrer"
                 class="text-text-muted hover:text-accent transition-colors"
+                data-umami-event="project-repo-click"
+                data-umami-event-project={project.title}
               >
                 Repo &rarr;
               </a>

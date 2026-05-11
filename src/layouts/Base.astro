@@ -10,6 +10,16 @@ interface Props {
 
 const { title, description = 'Jack Homer - Software Engineer at C3 AI based in Menlo Park, CA.' } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Umami Cloud analytics — cookieless pageviews + sessions + click events.
+// Enabled at build time by setting PUBLIC_UMAMI_WEBSITE_ID (the website ID
+// from cloud.umami.is). Left unset, the script tag isn't emitted at all, so
+// nothing leaks to a third party in local/dev builds. Custom click events
+// are wired via `data-umami-event` attributes on links throughout the site
+// (see projects.astro, Nav.astro, Footer.astro) — Umami picks them up
+// automatically with no extra JS.
+const UMAMI_WEBSITE_ID = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
+const UMAMI_HOST = import.meta.env.PUBLIC_UMAMI_HOST ?? 'https://cloud.umami.is';
 ---
 
 <!doctype html>
@@ -89,6 +99,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="author" content="Jack Homer" />
     <meta name="robots" content="index, follow" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {UMAMI_WEBSITE_ID && (
+      <script
+        is:inline
+        defer
+        src={`${UMAMI_HOST}/script.js`}
+        data-website-id={UMAMI_WEBSITE_ID}
+      />
+    )}
   </head>
   <body>
     <Nav />

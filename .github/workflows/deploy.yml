@@ -31,6 +31,12 @@ jobs:
         run: npm ci
 
       - name: Build Astro site
+        env:
+          # Umami Cloud analytics — only emitted into the HTML when this
+          # secret is set. Add at
+          # github.com/jhomer192/jhomer192.github.io/settings/secrets/actions
+          # with the Website ID from cloud.umami.is (Settings → Websites).
+          PUBLIC_UMAMI_WEBSITE_ID: ${{ secrets.PUBLIC_UMAMI_WEBSITE_ID }}
         run: npm run build
 
       - name: Upload Pages artifact
