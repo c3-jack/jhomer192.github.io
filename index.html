@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title>Jack Homer · A Sky of One Person</title>
+<meta name="description" content="An engraved star atlas of Jack Homer's side projects, day work, and small business. Click a constellation to enter.">
+<link rel="canonical" href="https://jhomer192.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jack Homer · A Sky of One Person">
+<meta property="og:description" content="An engraved star atlas of Jack Homer's side projects, day work, and small business.">
+<meta property="og:url" content="https://jhomer192.github.io/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate" type="application/rss+xml" href="/sitemap-index.xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Jack Homer","url":"https://jhomer192.github.io","jobTitle":"Forward Deployed Engineer","worksFor":{"@type":"Organization","name":"C3 AI","url":"https://c3.ai"},"alumniOf":{"@type":"CollegeOrUniversity","name":"Virginia Tech","url":"https://vt.edu"},"sameAs":["https://github.com/jhomer192","https://linkedin.com/in/jack-homer"],"knowsAbout":["Software Engineering","AI","Full-Stack Development","TypeScript","React","Python"],"address":{"@type":"PostalAddress","addressLocality":"Menlo Park","addressRegion":"CA","addressCountry":"US"}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/atlas.css">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="__UMAMI_WEBSITE_ID__"></script>
+</head>
+<body>
+
+<nav class="nav" aria-label="Primary">
+  <a class="brand" href="/">Jack Homer</a>
+  <ul>
+    <li><a href="/projects/">Projects</a></li>
+    <li><a href="/career/">Career</a></li>
+    <li><a href="/business/">Business</a></li>
+    <li><a href="/opinions/">Opinions</a></li>
+    <li><a href="/records/">Records</a></li>
+    <li><a href="/contact/">Contact</a></li>
+  </ul>
+</nav>
+
+<main class="chart">
+  <div class="meander-frame" aria-hidden="true">
+    <span class="strip top"></span><span class="strip bottom"></span>
+    <span class="strip left"></span><span class="strip right"></span>
+  </div>
+  <svg class="corner tl" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+  <svg class="corner tr" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+  <svg class="corner bl" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+  <svg class="corner br" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+
+  <header class="header">
+    <div class="l"><b>Tabula Hominis</b>Plate IV of XXX<br>Edn. MMXXVI · Iun. XIX<br>Engraved &amp; observed<br>by the subject himself</div>
+    <div class="c">
+      <span class="orn" aria-hidden="true">✦ ❦ ✦</span>
+      <h1>A Sky of One Person</h1>
+      <div class="sub">— Observed from Menlo Park · 37.4°N 122.2°W —</div>
+    </div>
+    <div class="r"><b>Sub Coelo Patuli</b>Equatorial aspect<br>Mag. limit: VI.5<br>Field: c. 30°<br>Drawn in ink, no apology</div>
+  </header>
+
+  <section class="preface">
+    <p>The subject, one J. Homer of the southern firmament of the Bay, having mapped neither stars nor seas of consequence, presents instead the small constellations he can claim: works shipped after dinner, day-labour rendered for the Corps, trade plied for the merchants of his town. The reader is invited to look up, choose a region, and to click.</p>
+    <div class="legend">
+      <b>Legend</b>
+      <span class="filled"></span>Live · open to the public<br>
+      <span class="ring"></span>Source only · no demo<br>
+      <span class="dash"></span>Conjunction — one thing built another
+      <span class="hint">⌖ Click a constellation to enter it. ESC steps back out.</span>
+    </div>
+  </section>
+
+  <div id="sky-wrap" class="sky-wrap" aria-label="Star chart"></div>
+
+</main>
+
+<div class="colophon">
+  <span class="orn" aria-hidden="true">✦ ❦ ✦</span>
+  IV · Constellatio Hominis<br>
+  Set in Cormorant Garamond &amp; IBM Plex Mono · drawn in ink<br>
+  <a href="mailto:jack@homerfamily.com">jack@homerfamily.com</a> · <a href="https://github.com/jhomer192">GitHub</a>
+</div>
+
+<script src="/assets/atlas.js"></script>
+<script>renderSky({mode:'overview'});</script>
+
+</body>
+</html>

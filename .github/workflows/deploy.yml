@@ -1,5 +1,11 @@
 name: Deploy to GitHub Pages
 
+# Static site — no build step. Files are served as-authored from the repo root.
+# The only build-time mutation is sed-replacing the __UMAMI_WEBSITE_ID__
+# placeholder in every HTML file with the value of the PUBLIC_UMAMI_WEBSITE_ID
+# secret. If the secret is unset, the placeholder is left in place and Umami
+# is effectively disabled (the script tag still loads but tracks no website).
+
 on:
   push:
     branches: [main]
@@ -21,28 +27,44 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build Astro site
+      - name: Inject Umami website ID
         env:
-          # Umami Cloud analytics — only emitted into the HTML when this
-          # secret is set. Add at
-          # github.com/jhomer192/jhomer192.github.io/settings/secrets/actions
+          # Set at github.com/jhomer192/jhomer192.github.io/settings/secrets/actions
           # with the Website ID from cloud.umami.is (Settings → Websites).
-          PUBLIC_UMAMI_WEBSITE_ID: ${{ secrets.PUBLIC_UMAMI_WEBSITE_ID }}
-        run: npm run build
+          UMAMI_ID: ${{ secrets.PUBLIC_UMAMI_WEBSITE_ID }}
+        run: |
+          if [ -n "$UMAMI_ID" ]; then
+            find . -name '*.html' -not -path './node_modules/*' -not -path './.git/*' \
+              -exec sed -i "s/__UMAMI_WEBSITE_ID__/${UMAMI_ID}/g" {} +
+            echo "Umami ID injected into HTML files."
+          else
+            echo "No PUBLIC_UMAMI_WEBSITE_ID set — leaving placeholder; analytics disabled."
+          fi
+
+      - name: Stage static files
+        run: |
+          mkdir -p _site
+          # Copy everything that should be served. Skip dev/source/CI/git stuff.
+          rsync -a \
+            --exclude='_site' \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='node_modules' \
+            --exclude='src' \
+            --exclude='dist' \
+            --exclude='public' \
+            --exclude='.astro' \
+            --exclude='.vscode' \
+            --exclude='package*.json' \
+            --exclude='tsconfig.json' \
+            --exclude='astro.config.*' \
+            --exclude='*.md' \
+            ./ _site/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./_site
 
   deploy:
     needs: build
