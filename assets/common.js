@@ -1,0 +1,35 @@
+// common.js — tiny shared script loaded on every page.
+// The full star-chart engine (atlas.js) only loads where the chart renders.
+
+// Mark the current nav link.
+function markCurrentNav(){
+  const path = location.pathname.replace(/\/$/,'') || '/';
+  document.querySelectorAll('.nav a[href]').forEach(a=>{
+    const href = a.getAttribute('href').replace(/\/$/,'') || '/';
+    if(href===path) a.setAttribute('aria-current','page');
+  });
+}
+
+// On a project detail page, if a recorded demo clip exists at the figure's
+// data-video path, swap the poster screenshot for the <video>. Lets a clip be
+// dropped in at /projects/media/<slug>.mp4 with no markup change.
+function swapProjectMedia(){
+  document.querySelectorAll('figure.media[data-video]').forEach(fig=>{
+    const url = fig.getAttribute('data-video');
+    const img = fig.querySelector('img');
+    if(!url || !img) return;
+    fetch(url, {method:'HEAD'}).then(r=>{
+      if(!r.ok) return;
+      const v = document.createElement('video');
+      v.controls = true; v.playsInline = true; v.preload = 'metadata';
+      const poster = img.getAttribute('src'); if(poster) v.poster = poster;
+      const src = document.createElement('source'); src.src = url; src.type = 'video/mp4';
+      v.appendChild(src); img.replaceWith(v);
+    }).catch(()=>{});
+  });
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  markCurrentNav();
+  swapProjectMedia();
+});

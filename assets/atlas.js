@@ -15,7 +15,7 @@ const CONSTELLATIONS = [
     figure:[{label:"The Builder's Loom", x:735, y:200}],
     stars:[
       {nm:'Songrank',           g:'spotify song ranker',  m:1, k:'demo', cx:485, cy:90,  url:D+'/songrank',  src:GH+'/songrank', img:'/screenshots/songrank.webp', page:'/projects/songrank/',
-        d:'Rank your most-played Spotify tracks by playing a long game of "this or that," then export the result as a real playlist.',
+        d:'Rank your Spotify tracks — recent and all-time — by playing a long game of "this or that," then export the result as a real playlist.',
         hi:[
           'Binary-insertion engine — ~370 head-to-head taps sort 128 tracks (64 recent, 64 all-time) into a true ranked order.',
           'Playlist export — writes your top 10 / 25 back to Spotify with auto-generated mosaic cover art.',
@@ -242,7 +242,7 @@ function buildConstellation(c, cam, onStarClick){
   // T3(c) figure label cluster
   (c.figure||[]).forEach(f=>{
     const t = document.createElementNS(SVGNS,'text');
-    t.setAttribute('class','figure-label');
+    t.setAttribute('class','figure-label'); t.setAttribute('aria-hidden','true');
     t.setAttribute('x', f.x); t.setAttribute('y', f.y);
     t.textContent = f.label;
     g.appendChild(t);
@@ -321,11 +321,11 @@ function buildConstellation(c, cam, onStarClick){
       sg.appendChild(lead);
     }
 
-    const gl = document.createElementNS(SVGNS,'text'); gl.setAttribute('class','glabel');
+    const gl = document.createElementNS(SVGNS,'text'); gl.setAttribute('class','glabel'); gl.setAttribute('aria-hidden','true');
     gl.setAttribute('x', tx); gl.setAttribute('y', ly - 5);
     gl.textContent = greekOf[i]; sg.appendChild(gl);
 
-    const nl = document.createElementNS(SVGNS,'text'); nl.setAttribute('class','nlabel');
+    const nl = document.createElementNS(SVGNS,'text'); nl.setAttribute('class','nlabel'); nl.setAttribute('aria-hidden','true');
     nl.setAttribute('x', tx); nl.setAttribute('y', ly + 9);
     nl.textContent = s.nm; sg.appendChild(nl);
 
@@ -349,12 +349,12 @@ function buildConstellation(c, cam, onStarClick){
 
   // constellation label
   const cl = document.createElementNS(SVGNS,'text');
-  cl.setAttribute('class','clabel');
+  cl.setAttribute('class','clabel'); cl.setAttribute('aria-hidden','true');
   cl.setAttribute('x', c.labelAt[0]); cl.setAttribute('y', c.labelAt[1]);
   cl.textContent = c.name; g.appendChild(cl);
 
   const cs = document.createElementNS(SVGNS,'text');
-  cs.setAttribute('class','csub');
+  cs.setAttribute('class','csub'); cs.setAttribute('aria-hidden','true');
   cs.setAttribute('x', c.labelAt[0]); cs.setAttribute('y', c.labelAt[1]+14);
   cs.textContent = c.sub.toUpperCase(); g.appendChild(cs);
 
@@ -372,10 +372,10 @@ function ensureCard(){
   if(cardOverlay) return cardOverlay;
   cardOverlay = document.createElement('div');
   cardOverlay.className = 'card-overlay';
-  cardOverlay.innerHTML = `<div class="card" role="dialog" aria-modal="true">
+  cardOverlay.innerHTML = `<div class="card" role="dialog" aria-modal="true" aria-labelledby="card-title">
     <button class="close" aria-label="close">esc · close</button>
-    <span class="greek"></span>
-    <h2></h2>
+    <span class="greek" aria-hidden="true"></span>
+    <h2 id="card-title"></h2>
     <div class="sub"></div>
     <p class="desc"></p>
     <img class="shot" alt="" loading="lazy">
@@ -670,32 +670,3 @@ window.renderSky = function(opts){
     });
   }
 };
-
-// On a project detail page, if a recorded demo clip exists at the figure's
-// data-video path, swap the poster screenshot for the <video>. Lets a clip be
-// dropped in at /projects/media/<slug>.mp4 with no markup change.
-function swapProjectMedia(){
-  document.querySelectorAll('figure.media[data-video]').forEach(fig=>{
-    const url = fig.getAttribute('data-video');
-    const img = fig.querySelector('img');
-    if(!url || !img) return;
-    fetch(url, {method:'HEAD'}).then(r=>{
-      if(!r.ok) return;
-      const v = document.createElement('video');
-      v.controls = true; v.playsInline = true; v.preload = 'metadata';
-      const poster = img.getAttribute('src'); if(poster) v.poster = poster;
-      const src = document.createElement('source'); src.src = url; src.type = 'video/mp4';
-      v.appendChild(src); img.replaceWith(v);
-    }).catch(()=>{});
-  });
-}
-
-// Mark current nav link
-document.addEventListener('DOMContentLoaded', ()=>{
-  const path = location.pathname.replace(/\/$/,'') || '/';
-  document.querySelectorAll('.nav a[href]').forEach(a=>{
-    const href = a.getAttribute('href').replace(/\/$/,'') || '/';
-    if(href===path) a.setAttribute('aria-current','page');
-  });
-  swapProjectMedia();
-});
