@@ -117,9 +117,9 @@
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const data = new FormData(form);
-    // Honeypot tripped — silently fake success.
+    // Honeypot tripped, silently fake success.
     if (data.get('website')) {
-      setStatus("Sent — thanks! I'll be in touch.", 'success');
+      setStatus("Sent, thanks! I'll be in touch.", 'success');
       form.reset();
       return;
     }
@@ -139,7 +139,7 @@
         const body = await res.text().catch(() => '');
         throw new Error('HTTP ' + res.status + ': ' + (body || 'unknown error'));
       }
-      setStatus("Sent — thanks! I'll be in touch.", 'success');
+      setStatus("Sent, thanks! I'll be in touch.", 'success');
       form.reset();
     } catch (err) {
       console.error(err);
