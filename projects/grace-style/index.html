@@ -14,8 +14,10 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:image" content="https://jhomer192.github.io/og.png">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/atlas.css?v=2">
+<link rel="stylesheet" href="/assets/atlas.css?v=3">
 <script defer src="https://cloud.umami.is/script.js" data-website-id="__UMAMI_WEBSITE_ID__"></script>
 </head>
 <body>
@@ -27,7 +29,6 @@
     <li><a href="/projects/">Projects</a></li>
     <li><a href="/career/">Career</a></li>
     <li><a href="/business/">Business</a></li>
-    <li><a href="/records/">Records</a></li>
     <li><a href="/contact/">Contact</a></li>
   </ul>
 </nav>
@@ -51,7 +52,6 @@
 
   <section class="proj">
     <div class="meta">Side project · 2026</div>
-    <h1>grace-style</h1>
     <p class="tagline">Upload a portrait and get a personalized 12-season color analysis — palette, hair, and makeup direction — from Claude vision.</p>
 
     <p>
@@ -64,8 +64,8 @@
     <p>
       grace-style is the answer. You drop in a portrait, the app sends it to Claude with vision, and
       you get back a structured 12-season read: your season, a wearable palette, hair direction, and
-      optional makeup notes. Everything stays in your browser — there's no account and no server that
-      keeps your photos. The backend exists only to talk to Claude and hand the result straight back.
+      optional makeup notes. Your photo goes to Claude for the read and isn't kept anywhere — there's
+      no account, and the backend exists only to pass the image through and hand the result straight back.
     </p>
 
     <h2>How it works</h2>
@@ -73,7 +73,7 @@
       <li><strong>Upload a portrait</strong> — the React frontend takes one photo and lets you toggle whether you want makeup recommendations before you run the analysis.</li>
       <li><strong>Claude does the vision read</strong> — an Express server writes the photo to a temp file, shells out to the Claude CLI in print mode, and parses the JSON it returns into a 12-season result.</li>
       <li><strong>You get a full breakdown</strong> — season, a color palette to wear, hair direction, and makeup notes when you opted in, rendered as a card you can save as an image.</li>
-      <li><strong>Nothing leaves your machine</strong> — the server is stateless and deletes the temp photo the moment the CLI finishes; results live only in your browser's localStorage.</li>
+      <li><strong>Your photo isn't stored</strong> — it goes to Claude for the read, then the stateless server deletes the temp file the moment the CLI finishes; results live only in your browser's localStorage.</li>
       <li><strong>It handles shared devices</strong> — each browser keeps its own list of past analyses (capped at 30), so several people on one laptop don't overwrite each other.</li>
     </ul>
 
@@ -93,7 +93,7 @@
   <a href="mailto:jack@homerfamily.com">jack@homerfamily.com</a> · <a href="https://github.com/jhomer192">GitHub</a>
 </div>
 
-<script src="/assets/atlas.js?v=2"></script>
+<script src="/assets/common.js?v=3"></script>
 
 </body>
 </html>
