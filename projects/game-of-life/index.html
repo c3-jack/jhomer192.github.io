@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title>Game of Life · Jack Homer</title>
+<meta name="description" content="Game of Life — an interactive Conway's Game of Life that runs at up to 60 generations a second on a wrap-around canvas, with a pattern library and live stats.">
+<link rel="canonical" href="https://jhomer192.github.io/projects/game-of-life/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Game of Life · Jack Homer">
+<meta property="og:description" content="An interactive Conway's Game of Life that runs at up to 60 generations a second on a wrap-around canvas, with a pattern library and live stats.">
+<meta property="og:url" content="https://jhomer192.github.io/projects/game-of-life/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:image" content="https://jhomer192.github.io/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/atlas.css?v=2">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="__UMAMI_WEBSITE_ID__"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav class="nav" aria-label="Primary">
+  <a class="brand" href="/">Jack Homer</a>
+  <ul>
+    <li><a href="/projects/">Projects</a></li>
+    <li><a href="/career/">Career</a></li>
+    <li><a href="/business/">Business</a></li>
+    <li><a href="/records/">Records</a></li>
+    <li><a href="/contact/">Contact</a></li>
+  </ul>
+</nav>
+
+<main id="main" class="chart text-plate">
+  <div class="meander-frame" aria-hidden="true">
+    <span class="strip top"></span><span class="strip bottom"></span>
+    <span class="strip left"></span><span class="strip right"></span>
+  </div>
+  <svg class="corner tl" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+  <svg class="corner tr" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+  <svg class="corner bl" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+  <svg class="corner br" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+
+  <header class="header">
+    <div class="c">
+      <h1>Game of Life</h1>
+      <div class="sub">cellular automaton</div>
+    </div>
+  </header>
+
+  <section class="proj">
+    <div class="meta">Side project · 2026</div>
+    <h1>Game of Life</h1>
+    <p class="tagline">Conway's Game of Life, running at up to 60 generations a second on a wrap-around canvas you can paint into and watch evolve.</p>
+
+    <figure class="media" data-video="/projects/media/game-of-life.mp4">
+      <img src="/screenshots/game-of-life.webp" alt="Game of Life screenshot" loading="lazy">
+      <figcaption>Demo · a glider gun spraying across the grid</figcaption>
+    </figure>
+
+    <p>
+      Conway's Game of Life is four lines of rules that produce endless behavior, and the appeal is
+      almost entirely in watching it move. Most versions you find online stutter on anything but a tiny
+      grid, or hide the controls that make it worth poking at — you can't pause mid-pattern, step one
+      generation at a time, or drop in a glider gun and see where it goes.
+    </p>
+    <p>
+      I wanted one that stayed smooth at a full screen of cells and let me drive it like an instrument.
+      So the simulation runs on a flat typed array with a second buffer it swaps each tick, the canvas
+      redraws every frame, and everything — speed, grid size, patterns, painting — is wired to controls
+      and keyboard shortcuts so you can stay in the loop while it runs.
+    </p>
+
+    <h2>How it works</h2>
+    <ul>
+      <li><strong>Typed-array grid</strong> — the board lives in a flat <code>Uint8Array</code> with a reused scratch buffer for the next generation, so each tick computes into the scratch and swaps rather than allocating, keeping the renderer steady up to 180×108 cells.</li>
+      <li><strong>Toroidal neighbours</strong> — the edges wrap, so a glider that runs off the right side reappears on the left and spaceships glide forever instead of dying at a wall.</li>
+      <li><strong>Drive it live</strong> — play, pause, step a single generation, clear, and randomize; a speed slider runs 1 to 60 generations per second; click toggles a cell and dragging paints or erases a whole region.</li>
+      <li><strong>Pattern library</strong> — drop in known shapes like the Glider, Lightweight Spaceship, Pulsar, Pentadecathlon, R-pentomino, and the Gosper Glider Gun without hand-placing every cell.</li>
+      <li><strong>Stats overlay</strong> — generation count, live cells, measured FPS, and current grid size update as it runs, plus keyboard shortcuts for play/pause, step, randomize, and clear.</li>
+    </ul>
+
+    <h2>Stack</h2>
+    <p class="stack">Vite · React · TypeScript · Tailwind, rendering to a raw Canvas. The simulation is plain typed-array logic kept out of React's render path, so the component tree only handles controls while the grid steps and draws on its own loop.</p>
+
+    <div class="cta">
+      <a href="https://jhomer192.github.io/game-of-life" target="_blank" rel="noopener" data-umami-event="proj-link" data-umami-event-target="game-of-life-demo">Try it live ↗</a>
+      <a href="https://github.com/jhomer192/game-of-life" target="_blank" rel="noopener" data-umami-event="proj-link" data-umami-event-target="game-of-life-src">Source on GitHub ↗</a>
+    </div>
+  </section>
+
+  <p class="returnto"><a href="/projects/">← all projects</a></p>
+</main>
+
+<div class="colophon">
+  Jack Homer · Bay Area<br>
+  <a href="mailto:jack@homerfamily.com">jack@homerfamily.com</a> · <a href="https://github.com/jhomer192">GitHub</a>
+</div>
+
+<script src="/assets/atlas.js?v=2"></script>
+
+</body>
+</html>
