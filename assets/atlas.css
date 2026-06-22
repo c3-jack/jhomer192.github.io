@@ -7,6 +7,7 @@
   --ink-soft:#3a3a3a;
   --ink-faint:#6a6a6a;
   --accent:#1b4a8a;
+  --rule:rgba(10,10,10,.2);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -22,14 +23,36 @@ body{min-height:100vh;padding:32px 20px 56px;
 
 a{color:inherit}
 a:focus-visible{outline:1px solid var(--accent);outline-offset:2px}
+.sr-only,.listview{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+/* skip-to-content link — visible only when focused */
+.skip{position:fixed;left:8px;top:8px;z-index:100;background:var(--ink);color:var(--paper);padding:9px 16px;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-decoration:none;transform:translateY(-160%);transition:transform .15s ease}
+.skip:focus{transform:none}
+/* "open to roles" status pill */
+.header .status{color:var(--accent);white-space:nowrap}
+.header .status::before{content:'● ';font-size:.7em;vertical-align:1px}
+/* Sky / List view toggle */
+.viewtoggle{margin-top:12px;background:none;border:1px solid var(--rule);border-radius:999px;padding:5px 14px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);cursor:pointer;transition:border-color .2s,color .2s}
+.viewtoggle:hover,.viewtoggle:focus-visible{border-color:var(--accent);color:var(--accent)}
+/* list mode: reveal the index, hide the chart */
+body.listmode main.chart > .sky-wrap,body.listmode .preface,body.listmode .compass,body.listmode .comet,body.listmode .moonphase{display:none}
+body.listmode .listview{position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto;white-space:normal;padding:8px 56px 36px;border:0}
+.listview h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:26px;margin-bottom:6px}
+.listview h3{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin:22px 0 8px;border-bottom:1px solid var(--rule);padding-bottom:6px}
+.listview p{font-size:15px;line-height:1.6;margin-bottom:8px}
+.listview .ix{list-style:none;padding:0;margin:0}
+.listview .ix li{font-size:14.5px;line-height:1.55;padding:9px 0;border-top:1px solid var(--rule)}
+.listview .ix li:first-child{border-top:0}
+.listview a{color:var(--accent);text-decoration:underline}
+.listview .ix-contact{margin-top:20px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.04em}
+@media (max-width:720px){ body.listmode .listview{padding:6px 18px 28px} }
 
 /* T1 — laid-paper SVG noise (hidden filter referenced as background) */
-.paper-noise{position:absolute;inset:0;opacity:.06;pointer-events:none;mix-blend-mode:multiply;z-index:0}
+.paper-noise{position:absolute;inset:0;opacity:.05;pointer-events:none;z-index:0}
 
 /* chart frame — T2 Greek-key meander border */
 .chart{max-width:1180px;margin:0 auto;background:var(--paper);border:1.5px solid var(--ink);position:relative;
   box-shadow:0 1px 0 var(--ink),0 2px 0 var(--ink),0 12px 36px rgba(0,0,0,.15)}
-.chart::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='420' height='420' filter='url(%23n)'/></svg>");opacity:.045;pointer-events:none;mix-blend-mode:multiply;z-index:1}
+.chart::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='420' height='420'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.55 0'/></filter><rect width='420' height='420' filter='url(%23n)'/></svg>");opacity:.04;pointer-events:none;z-index:1}
 
 /* meander border around outer chart frame */
 .meander-frame{position:absolute;inset:8px;border:0;pointer-events:none;z-index:2}
@@ -77,8 +100,7 @@ a:focus-visible{outline:1px solid var(--accent);outline-offset:2px}
 
 /* preface */
 .preface{padding:14px 56px 16px;border-bottom:1px solid var(--ink);display:grid;grid-template-columns:1fr 380px;gap:30px;font-size:14px;line-height:1.55;align-items:start;position:relative;z-index:4}
-.preface p{font-style:italic;color:#1a1a1a}
-.preface p:first-letter{font-size:38px;float:left;line-height:.85;padding:6px 8px 0 0;font-style:normal;font-weight:700}
+.preface p{font-style:normal;color:#1a1a1a}
 .preface .legend{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;line-height:1.9;border-left:1px solid var(--ink);padding-left:18px}
 .preface .legend b{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.18em;display:block;margin-bottom:4px;font-weight:700}
 .preface .legend .filled{width:8px;height:8px;border-radius:50%;background:var(--ink);display:inline-block;vertical-align:middle;margin:0 10px 0 3px}
@@ -92,26 +114,54 @@ a:focus-visible{outline:1px solid var(--accent);outline-offset:2px}
 
 /* sky */
 .sky-wrap{position:relative;margin:6px 56px 22px;border:1px solid var(--ink);background:var(--paper);overflow:hidden;touch-action:manipulation;z-index:4}
-.sky-wrap::before{content:'';position:absolute;inset:0;background-image:
-  linear-gradient(to right, rgba(10,10,10,.05) 1px, transparent 1px),
-  linear-gradient(to bottom, rgba(10,10,10,.05) 1px, transparent 1px),
-  linear-gradient(to right, rgba(10,10,10,.03) 1px, transparent 1px),
-  linear-gradient(to bottom, rgba(10,10,10,.03) 1px, transparent 1px);
-  background-size:50px 50px,50px 50px,10px 10px,10px 10px;pointer-events:none;z-index:1}
-.sky-wrap::after{content:'';position:absolute;inset:0;background:
-  radial-gradient(circle at 14% 22%, var(--ink) 0.4px, transparent 1px),
-  radial-gradient(circle at 67% 41%, var(--ink) 0.3px, transparent 1px),
-  radial-gradient(circle at 39% 78%, var(--ink) 0.4px, transparent 1px),
-  radial-gradient(circle at 91% 68%, var(--ink) 0.35px, transparent 1px),
-  radial-gradient(circle at 24% 55%, var(--ink) 0.3px, transparent 1px);
-  background-size:90px 90px,130px 130px,110px 110px,160px 160px,100px 100px;pointer-events:none;z-index:1}
+/* grid + background stars now render inside the SVG cam (see renderGrid) so they
+   pan and zoom with the chart instead of staying frozen */
+.graticule .grid-major{stroke:rgba(10,10,10,.045);stroke-width:.5}
+.graticule .grid-minor{stroke:rgba(10,10,10,.022);stroke-width:.5}
+.graticule .bgstar{fill:var(--ink);opacity:.2}
+
+/* figure lines — soft round caps (no SVG filter: it triggered a Chromium
+   bug that hid the OS mouse cursor over the chart) */
+.cons .edge{stroke-linecap:round}
+
+/* compass needle springs toward the cursor */
+.compass .needle{transform-box:fill-box;transform-origin:50% 67%;transition:transform .5s cubic-bezier(.2,1.3,.3,1)}
+/* comet → colophon */
+.comet{position:absolute;right:14px;top:12px;width:26px;height:26px;padding:4px;border:0;background:none;cursor:pointer;color:var(--ink-faint);opacity:.45;transition:opacity .25s,color .25s;z-index:6}
+.comet:hover,.comet:focus-visible{opacity:1;color:var(--accent)}
+.comet svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}
+
+/* Phase B — rare shooting star */
+.shooting{position:absolute;width:88px;height:1px;pointer-events:none;z-index:3;opacity:0;
+  background:linear-gradient(90deg, transparent, var(--ink));animation:shoot 1.5s ease-out forwards}
+@keyframes shoot{0%{opacity:0;transform:translate(-24px,-16px) rotate(20deg) scaleX(.2)}14%{opacity:.5}100%{opacity:0;transform:translate(150px,52px) rotate(20deg) scaleX(1)}}
+
+/* Phase E — moon-phase glyph + seasonal asterism */
+.moonphase{position:absolute;left:14px;bottom:12px;width:24px;height:24px;z-index:6;opacity:.8}
+.moonphase svg{width:100%;height:100%;overflow:visible}
+.moon-lit{fill:var(--ink)} .moon-shadow{fill:var(--paper)} .moon-ring{fill:none;stroke:var(--ink);stroke-width:1}
+.seasonal{opacity:.3}
+.seasonal line{stroke:var(--ink);stroke-width:.5;opacity:.5}
+.seasonal .sstar{fill:var(--ink);opacity:.6}
+.seasonal .slabel{font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.16em;text-transform:uppercase;fill:var(--ink-faint)}
+
+/* Phase D — plate develops on first load */
+@media (prefers-reduced-motion: no-preference){
+  .chart{animation:develop 900ms ease both}
+  #cam{animation:precipitate 1300ms ease both}
+}
+@keyframes develop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes precipitate{0%,35%{opacity:0}100%{opacity:1}}
+@media (prefers-reduced-motion: no-preference){
+  .graticule .bgstar.tw{animation:twinkle var(--tw,3s) ease-in-out var(--td,0s) infinite}
+}
+@keyframes twinkle{0%,100%{opacity:.28}50%{opacity:.6}}
 @media (max-width:720px){
-  .sky-wrap{margin:4px 22px 14px;aspect-ratio:1/1.05 !important}
+  .sky-wrap{margin:4px 22px 14px}
   /* SVG text sizes are in viewBox user units. The SVG renders into a small
      mobile container, so user-unit text shrinks. Scale labels up for legibility. */
   .sky-svg .glabel{font-size:18px}
   .sky-svg .nlabel{font-size:18px}
-  .sky-svg .gloss{font-size:13.5px}
   .sky-svg .clabel{font-size:28px}
   .sky-svg .csub{font-size:13px}
   .sky-svg .figure-label{font-size:16px}
@@ -129,6 +179,7 @@ a:focus-visible{outline:1px solid var(--accent);outline-offset:2px}
 
 /* constellation */
 .cons{cursor:pointer;outline:none}
+.cons:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
 .cons:focus-visible .hull{stroke:var(--accent);stroke-width:1.4;stroke-dasharray:none;opacity:1}
 .cons .hull{fill:rgba(27,74,138,.025);stroke:var(--ink);stroke-width:.6;stroke-dasharray:3 5;opacity:.55;transition:opacity .35s ease, fill .35s ease, stroke-width .35s ease, stroke .25s ease}
 .cons:hover .hull,.cons.lit .hull{opacity:1;fill:rgba(27,74,138,.06);stroke-width:.9}
@@ -144,20 +195,42 @@ a:focus-visible{outline:1px solid var(--accent);outline-offset:2px}
 .cons .figure-label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:10px;fill:var(--ink-soft);text-anchor:middle;letter-spacing:.06em;pointer-events:none;opacity:0;transition:opacity .35s ease}
 .cons:hover .figure-label,.cons.lit .figure-label{opacity:.55}
 
-/* edges within constellation */
-.cons .edge{stroke:var(--ink);stroke-width:.7;stroke-dasharray:3 4;opacity:0;transition:opacity .35s ease}
-.cons .edge.conj{stroke:var(--accent);stroke-dasharray:2 5}
+/* edges within constellation — faint figure visible at the sky level so the dots
+   read as a constellation; pathLength=1 lets us "ink it in" on entry */
+.cons .edge{stroke:var(--ink);stroke-width:.6;opacity:.18;stroke-dasharray:1;stroke-dashoffset:0;transition:opacity .35s ease}
+.cons .edge.conj{stroke:var(--accent);stroke-dasharray:2 5;stroke-dashoffset:0}
+/* once a constellation is picked, draw its figure lines solid like a real chart,
+   and fade the boundary hull so the figure (not the box) reads */
+.cons.entered .edge{opacity:.55;animation:draw-on .55s ease var(--ed,0s) backwards}
+.cons.entered .edge.conj{opacity:.7;animation:none}
+.cons.entered .hull{opacity:.16}
+/* breadcrumb already names the entered constellation — drop the in-chart title so it can't sit on a star label */
+.cons.entered .clabel,.cons.entered .csub{opacity:0}
+@keyframes draw-on{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion: reduce){ .cons.entered .edge{animation:none} }
 
 /* stars */
 .star{cursor:pointer;outline:none}
+.star .hit{fill:transparent;pointer-events:all}
+/* pause twinkle when tab hidden / chart off-screen */
+.anim-paused .graticule .bgstar.tw{animation-play-state:paused}
+/* sticky "back to the sky" — mobile only, while zoomed into a constellation */
+.skyback{display:none;position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:40;background:var(--ink);color:var(--paper);border:0;border-radius:999px;padding:11px 20px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+@media (max-width:720px){ body.zoomed .skyback{display:block} }
+.star:focus-visible .hit{stroke:var(--accent);stroke-width:1.5;fill:rgba(27,74,138,.06)}
 .star:focus-visible .dot,.star:focus-visible .ring{filter:drop-shadow(0 0 2px var(--accent))}
 .star .dot{fill:var(--ink);transition:r .25s ease, filter .25s ease}
 .star .ring{fill:var(--paper);stroke:var(--ink);stroke-width:1.5;transition:r .25s ease}
-.star .glabel{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:11px;fill:var(--ink);pointer-events:none;letter-spacing:.02em}
-.star .nlabel{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11.5px;fill:var(--ink);pointer-events:none}
-.star .gloss{font-family:'IBM Plex Mono',monospace;font-size:8.5px;fill:var(--ink-soft);letter-spacing:.16em;text-transform:uppercase;pointer-events:none}
-.star.right .glabel,.star.right .nlabel,.star.right .gloss{text-anchor:end}
-.star.left .glabel,.star.left .nlabel,.star.left .gloss{text-anchor:start}
+.star .glabel{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:11px;fill:var(--ink-faint);pointer-events:none;letter-spacing:.02em;paint-order:stroke;stroke:var(--paper);stroke-width:2.5px;stroke-linejoin:round}
+/* names: upright, a touch larger, with a paper halo so they stay legible over the grid */
+.star .nlabel{font-family:'Cormorant Garamond',serif;font-style:normal;font-weight:600;font-size:13px;fill:var(--ink);pointer-events:none;paint-order:stroke;stroke:var(--paper);stroke-width:3px;stroke-linejoin:round}
+.star.right .glabel,.star.right .nlabel{text-anchor:end}
+.star.left .glabel,.star.left .nlabel{text-anchor:start}
+/* Star names stay hidden at the sky level (dots + Greek designations only) until a constellation is picked (entered/focused) */
+.star .nlabel{opacity:0;transition:opacity .32s ease}
+.cons.entered .star .nlabel{opacity:1}
+.cons .leader{stroke:var(--ink-faint);stroke-width:.4;opacity:0;transition:opacity .32s ease}
+.cons.entered .leader{opacity:.4}
 .star.m1 .dot{r:5}
 .star.m2 .dot{r:3.8}
 .star.m3 .dot{r:2.8}
@@ -252,15 +325,25 @@ a:focus-visible{outline:1px solid var(--accent);outline-offset:2px}
 .form .status{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-top:6px;min-height:14px}
 
 /* card (star detail modal) */
-.card-overlay{position:fixed;inset:0;background:rgba(10,10,10,.55);z-index:50;display:none;align-items:center;justify-content:center;padding:24px}
-.card-overlay.open{display:flex}
-.card{background:var(--paper);border:1.5px solid var(--ink);max-width:540px;width:100%;max-height:80vh;overflow-y:auto;padding:32px;position:relative;box-shadow:0 1px 0 var(--ink),0 2px 0 var(--ink),0 12px 36px rgba(0,0,0,.3)}
+.card-overlay{position:fixed;inset:0;background:rgba(10,10,10,.58);z-index:50;display:none;align-items:center;justify-content:center;padding:24px}
+.card-overlay.open{display:flex;animation:overlayIn .25s ease both}
+.card{background:var(--paper);border:1.5px solid var(--ink);max-width:540px;width:100%;max-height:82vh;overflow-y:auto;padding:34px 36px;position:relative;box-shadow:0 1px 0 var(--ink),0 2px 0 var(--ink),0 18px 50px rgba(0,0,0,.32);animation:cardIn .32s cubic-bezier(.2,.9,.3,1) both}
+@keyframes overlayIn{from{opacity:0}to{opacity:1}}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+@media (max-width:720px){
+  .card-overlay{align-items:flex-end;padding:0}
+  .card{max-width:none;max-height:88vh;border-width:2px 0 0;padding:26px 22px 32px;box-shadow:0 -10px 40px rgba(0,0,0,.3);animation:sheetIn .34s cubic-bezier(.2,.9,.3,1) both}
+}
+@keyframes sheetIn{from{transform:translateY(100%)}to{transform:none}}
 .card .close{position:absolute;top:14px;right:14px;background:none;border:0;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;color:var(--ink-soft);cursor:pointer;padding:4px 8px}
 .card .close:hover{color:var(--accent)}
 .card .greek{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:32px;color:var(--accent);float:left;margin:-2px 14px 0 0;line-height:1}
 .card h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:26px;margin-bottom:2px}
 .card .sub{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
 .card p{font-size:15px;line-height:1.6;margin-bottom:14px}
+.card .hi{list-style:none;margin:0 0 14px;padding:0}
+.card .hi li{position:relative;font-size:13.5px;line-height:1.5;color:var(--ink-soft);padding:0 0 8px 16px}
+.card .hi li::before{content:'·';position:absolute;left:2px;top:-1px;color:var(--accent);font-weight:700}
 .card .links{display:flex;gap:14px;margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase}
 .card .links a{color:var(--accent);text-decoration:underline}
 .card .kind{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);margin-top:14px;padding-top:14px;border-top:1px solid rgba(10,10,10,.2)}
@@ -358,7 +441,6 @@ a:focus-visible{outline:1px solid var(--accent);outline-offset:2px}
 
   /* preface — let drop-cap and prose breathe, single column already set above */
   .preface{padding:14px 18px 14px;font-size:13.5px;line-height:1.55;gap:14px}
-  .preface p:first-letter{font-size:34px;padding:4px 6px 0 0}
   .preface .legend{font-size:9px;line-height:1.85;padding-top:10px}
 
   /* sky-wrap — single thin border, no nested decoration */
@@ -384,4 +466,19 @@ a:focus-visible{outline:1px solid var(--accent);outline-offset:2px}
 
   /* colophon tighter */
   .colophon{padding:0 10px;font-size:9px;letter-spacing:.14em}
+
+  /* chart is the hero on mobile: compact title → the sky → intro/legend below.
+     Scoped away from .text-plate (contact/records/writing) which have no chart. */
+  main.chart:not(.text-plate){display:flex;flex-direction:column}
+  main.chart:not(.text-plate) > .header{order:0}
+  main.chart:not(.text-plate) > #sky-wrap{order:1}
+  main.chart:not(.text-plate) > .preface{order:2}
+  main.chart:not(.text-plate) > .sr-only,main.chart:not(.text-plate) > noscript{order:3}
+  .header{border-bottom:0}
+  #sky-wrap{margin:12px 14px 16px !important;aspect-ratio:auto !important}
+  .preface{border-bottom:0;border-top:1px solid var(--ink)}
+  .preface .legend{border-left:0;padding-left:0;padding-top:10px}
+  /* perf: don't run 150 infinite twinkles or the displacement filter on phones */
+  .graticule .bgstar{animation:none}
+  .cons .edge,.cons .hull{filter:none}
 }
