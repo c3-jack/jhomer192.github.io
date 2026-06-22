@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title>Birthday Paradox · Jack Homer</title>
+<meta name="description" content="Birthday Paradox — the theoretical probability curve and a live in-browser Monte Carlo simulator, side by side, showing why 23 people is enough for a shared birthday.">
+<link rel="canonical" href="https://jhomer192.github.io/projects/birthday-paradox/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Birthday Paradox · Jack Homer">
+<meta property="og:description" content="The theory and a live Monte Carlo simulation, side by side, showing why 23 people is enough to share a birthday.">
+<meta property="og:url" content="https://jhomer192.github.io/projects/birthday-paradox/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:image" content="https://jhomer192.github.io/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/atlas.css?v=2">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="__UMAMI_WEBSITE_ID__"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav class="nav" aria-label="Primary">
+  <a class="brand" href="/">Jack Homer</a>
+  <ul>
+    <li><a href="/projects/">Projects</a></li>
+    <li><a href="/career/">Career</a></li>
+    <li><a href="/business/">Business</a></li>
+    <li><a href="/records/">Records</a></li>
+    <li><a href="/contact/">Contact</a></li>
+  </ul>
+</nav>
+
+<main id="main" class="chart text-plate">
+  <div class="meander-frame" aria-hidden="true">
+    <span class="strip top"></span><span class="strip bottom"></span>
+    <span class="strip left"></span><span class="strip right"></span>
+  </div>
+  <svg class="corner tl" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+  <svg class="corner tr" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+  <svg class="corner bl" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+  <svg class="corner br" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+
+  <header class="header">
+    <div class="c">
+      <h1>Birthday Paradox</h1>
+      <div class="sub">probability visualizer</div>
+    </div>
+  </header>
+
+  <section class="proj">
+    <div class="meta">Side project · 2026</div>
+    <h1>Birthday Paradox</h1>
+    <p class="tagline">See why 23 people is enough to share a birthday — the theory and a live simulation, side by side.</p>
+
+    <figure class="media" data-video="/projects/media/birthday-paradox.mp4">
+      <img src="/screenshots/birthday-paradox.webp" alt="Birthday Paradox screenshot" loading="lazy">
+      <figcaption>Demo · running the simulator until the empirical estimate meets the curve</figcaption>
+    </figure>
+
+    <p>
+      The birthday paradox is the standard example of a true thing that feels wrong: in a room of just
+      23 people, it's more likely than not that two of them share a birthday. Most people hear the answer,
+      nod, and still don't believe it — because the explanation is a formula, and a formula doesn't move.
+      I wanted something you could push on instead of read.
+    </p>
+    <p>
+      So this puts the math and the experiment in the same view. On one side is the exact probability
+      curve; on the other is a Monte Carlo simulator that actually deals out random birthdays, trial after
+      trial, and tallies how often a collision shows up. Watch the empirical number climb toward the
+      theoretical one and the result stops being a claim you take on faith and starts being something you
+      just saw happen.
+    </p>
+
+    <h2>How it works</h2>
+    <ul>
+      <li><strong>Plots the exact curve</strong> — the theoretical probability P(N) for group sizes from 1 to 100, with the 50% crossover at N = 23 annotated right on the line.</li>
+      <li><strong>Runs a live simulation</strong> — a Monte Carlo engine deals random birthdays for up to 100,000 trials and reports a running empirical estimate next to the theoretical value, so you can see how far off it is at any moment.</li>
+      <li><strong>Stays smooth under load</strong> — the trials are chunked across requestAnimationFrame frames instead of run in one blocking loop, so the progress bar animates and the page stays responsive even at 100k.</li>
+      <li><strong>Lets you turn the knobs</strong> — adjust the group size (1–100) and the trial count (100, 1k, 10k, 100k) and re-run to feel how each one changes the answer and the noise.</li>
+      <li><strong>Shows a single sample</strong> — a calendar of all 365 days renders one random draw of the current group, with any collision days lit up in red so you can see a match concretely.</li>
+    </ul>
+
+    <h2>Stack</h2>
+    <p class="stack">Vite · React 18 · TypeScript (strict) · Tailwind · Recharts. Dark and light themes with system auto-detect and a manual override; ships as a static bundle to GitHub Pages, so it runs entirely in the browser with no backend.</p>
+
+    <div class="cta">
+      <a href="https://jhomer192.github.io/birthday-paradox" target="_blank" rel="noopener" data-umami-event="proj-link" data-umami-event-target="birthday-paradox-demo">Try it live ↗</a>
+      <a href="https://github.com/jhomer192/birthday-paradox" target="_blank" rel="noopener" data-umami-event="proj-link" data-umami-event-target="birthday-paradox-src">Source on GitHub ↗</a>
+    </div>
+  </section>
+
+  <p class="returnto"><a href="/projects/">← all projects</a></p>
+</main>
+
+<div class="colophon">
+  Jack Homer · Bay Area<br>
+  <a href="mailto:jack@homerfamily.com">jack@homerfamily.com</a> · <a href="https://github.com/jhomer192">GitHub</a>
+</div>
+
+<script src="/assets/atlas.js?v=2"></script>
+
+</body>
+</html>

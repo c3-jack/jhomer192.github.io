@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+<title>Meme Maker · Jack Homer</title>
+<meta name="description" content="Meme Maker — a browser meme editor: pick a template or drop in your own image, caption it, and download a clean PNG. No backend, no uploads, no watermark.">
+<link rel="canonical" href="https://jhomer192.github.io/projects/meme-maker/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Meme Maker · Jack Homer">
+<meta property="og:description" content="A browser meme editor: pick a template or drop in your own image, caption it, and download a clean PNG. Pure client-side — nothing leaves your device.">
+<meta property="og:url" content="https://jhomer192.github.io/projects/meme-maker/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:image" content="https://jhomer192.github.io/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/atlas.css?v=2">
+<script defer src="https://cloud.umami.is/script.js" data-website-id="__UMAMI_WEBSITE_ID__"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<nav class="nav" aria-label="Primary">
+  <a class="brand" href="/">Jack Homer</a>
+  <ul>
+    <li><a href="/projects/">Projects</a></li>
+    <li><a href="/career/">Career</a></li>
+    <li><a href="/business/">Business</a></li>
+    <li><a href="/records/">Records</a></li>
+    <li><a href="/contact/">Contact</a></li>
+  </ul>
+</nav>
+
+<main id="main" class="chart text-plate">
+  <div class="meander-frame" aria-hidden="true">
+    <span class="strip top"></span><span class="strip bottom"></span>
+    <span class="strip left"></span><span class="strip right"></span>
+  </div>
+  <svg class="corner tl" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+  <svg class="corner tr" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+  <svg class="corner bl" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+  <svg class="corner br" viewBox="0 0 28 28" aria-hidden="true"><path d="M2 14 Q2 2 14 2 M14 2 Q14 8 2 14" fill="none" stroke="#0a0a0a" stroke-width="1"/><circle cx="2" cy="14" r="1.2" fill="#0a0a0a"/></svg>
+
+  <header class="header">
+    <div class="c">
+      <h1>Meme Maker</h1>
+      <div class="sub">browser meme editor</div>
+    </div>
+  </header>
+
+  <section class="proj">
+    <div class="meta">Side project · 2026</div>
+    <h1>Meme Maker</h1>
+    <p class="tagline">Build a meme in the browser — pick a template or drop in your own image, caption it, and download a clean PNG.</p>
+
+    <figure class="media" data-video="/projects/media/meme-maker.mp4">
+      <img src="/screenshots/meme-generator.webp" alt="Meme Maker screenshot" loading="lazy">
+      <figcaption>Demo · captioning a template and exporting to PNG</figcaption>
+    </figure>
+
+    <p>
+      Most online meme makers want something from you in return — an account, an upload to their
+      servers, an ad wall, or a watermark stamped across the bottom of whatever you just made. For a
+      thing you mostly want to type two lines on and post in under a minute, that's a lot of friction.
+    </p>
+    <p>
+      Meme Maker keeps the whole job on your own machine. You start from a built-in template or an image
+      you already have, set your top and bottom captions, tune how the text looks, and hit download.
+      Nothing is uploaded, nothing is stored, and the file you get back is just your meme.
+    </p>
+
+    <h2>How it works</h2>
+    <ul>
+      <li><strong>Two ways to start</strong> — choose from a library of common meme formats, or drop in any image from your device. Either path lands you in the same editor.</li>
+      <li><strong>Real caption controls</strong> — separate top and bottom text with adjustable font size, color, outline stroke, and drop shadow, so the words stay readable over whatever's behind them.</li>
+      <li><strong>Drawn on a canvas</strong> — the image and text composite live on an HTML canvas, which is also what gets exported, so the download matches the preview pixel-for-pixel.</li>
+      <li><strong>PNG export</strong> — one click pulls the canvas down as a PNG. No watermark, no sign-in, no compression surprise.</li>
+      <li><strong>Dark and light themes</strong> — the editor chrome flips between themes to suit the room you're working in.</li>
+    </ul>
+
+    <h2>Stack</h2>
+    <p class="stack">React · TypeScript · Vite · HTML Canvas. Everything runs client-side and ships as a static build on GitHub Pages — there's no backend, so your images never leave the browser tab.</p>
+
+    <div class="cta">
+      <a href="https://jhomer192.github.io/meme-generator" target="_blank" rel="noopener" data-umami-event="proj-link" data-umami-event-target="meme-maker-demo">Try it live ↗</a>
+      <a href="https://github.com/jhomer192/meme-generator" target="_blank" rel="noopener" data-umami-event="proj-link" data-umami-event-target="meme-maker-src">Source on GitHub ↗</a>
+    </div>
+  </section>
+
+  <p class="returnto"><a href="/projects/">← all projects</a></p>
+</main>
+
+<div class="colophon">
+  Jack Homer · Bay Area<br>
+  <a href="mailto:jack@homerfamily.com">jack@homerfamily.com</a> · <a href="https://github.com/jhomer192">GitHub</a>
+</div>
+
+<script src="/assets/atlas.js?v=2"></script>
+
+</body>
+</html>
