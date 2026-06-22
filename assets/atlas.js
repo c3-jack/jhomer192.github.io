@@ -14,16 +14,86 @@ const CONSTELLATIONS = [
     labelAt:[750, 50], box:[440, 30, 985, 350],
     figure:[{label:"The Builder's Loom", x:735, y:200}],
     stars:[
-      {nm:'Songrank',           g:'Beli for songs',       m:1, k:'demo', cx:485, cy:90,  url:D+'/songrank',  src:GH+'/bracketeering', d:'Spotify-powered song ranking with adaptive comparisons and bracket export. Generates top-10 / top-25 playlists tuned by your own listening.'},
-      {nm:'WikiGame',           g:'best-path solver',     m:1, k:'demo', cx:680, cy:55, url:D+'/wikipedia-game-solver', src:GH+'/wikipedia-game-solver', d:'A solver for "the Wikipedia Game" — fastest hop from page A to page B via TF-IDF + greedy best-path search. 1,826 cached routes, 100+ templates.'},
-      {nm:'Memes',              g:'meme generator',       m:2, k:'demo', cx:885, cy:120, url:D+'/meme-generator', src:GH+'/meme-generator', d:'Classic meme generator. Canvas-rendered captions on common templates.'},
-      {nm:'Auto Applier',       g:'overnight queue',      m:2, k:'work', cx:740, cy:160, d:'A background agent that writes code from a queue overnight. Lives at jhomer192/auto-applier.'},
-      {nm:'Clocktower',         g:'storyteller tools',    m:2, k:'demo', cx:935, cy:210, url:D+'/clocktower', src:GH+'/clocktower', d:'Storyteller tools for Blood on the Clocktower — character grimoire + night order + voting tracker.'},
-      {nm:'Nuzlocke',           g:'graveyard log',        m:3, k:'demo', cx:515, cy:265, url:D+'/nuzlocke-tracker', src:GH+'/nuzlocke-tracker', d:'Tracks a Pokémon Nuzlocke run: caught, fainted, boss progress.'},
-      {nm:"Connectronix",       g:'no backend',           m:3, k:'demo', cx:680, cy:280, url:D+'/connections-maker', src:GH+'/connections-maker', d:'A make-your-own NYT Connections puzzle, stored entirely in the URL hash.'},
-      {nm:'Game of Life',       g:'cellular automaton',   m:3, k:'demo', cx:585, cy:325, url:D+'/game-of-life', src:GH+'/game-of-life', d:"Conway's Game of Life, rendered cell-by-cell in the browser."},
-      {nm:'Birthday Paradox',   g:'prob. visualizer',     m:3, k:'demo', cx:830, cy:340, url:D+'/birthday-paradox', src:GH+'/birthday-paradox', d:'An interactive probability visualizer for the birthday problem.'},
-      {nm:'Claude Bot',         g:'built the rest',       m:1, k:'src',  cx:935, cy:295, src:GH+'/claude-bot', d:'A self-hosted, persistent Claude agent over Telegram — the harness that built most of the rest of this sky.'},
+      {nm:'Songrank',           g:'spotify song ranker',  m:1, k:'demo', cx:485, cy:90,  url:D+'/songrank',  src:GH+'/songrank', img:'/screenshots/songrank.webp',
+        d:'Rank your most-played Spotify tracks by playing a long game of "this or that," then export the result as a real playlist.',
+        hi:[
+          'Binary-insertion engine — ~370 head-to-head taps sort 128 tracks (64 recent, 64 all-time) into a true ranked order.',
+          'Playlist export — writes your top 10 / 25 back to Spotify with auto-generated mosaic cover art.',
+          'Friends mode — someone guesses your top 10 and gets scored on how close they got.',
+        ],
+        st:'Next.js · TypeScript · Tailwind · Spotify PKCE OAuth (bring your own dev app, no shared rate cap).'},
+      {nm:'WikiGame',           g:'wiki path solver',     m:1, k:'demo', cx:680, cy:55, url:D+'/wikipedia-game-solver', src:GH+'/wikipedia-game-solver', img:'/screenshots/wikigame.webp',
+        d:'Give it any two Wikipedia articles and watch it find a path between them, hopping link to link.',
+        hi:[
+          'Greedy TF-IDF walker — at each page it scores outbound links by similarity to the target and takes the best one, up to 30 hops.',
+          'Public API only — runs straight against the live MediaWiki API, no key or backend.',
+          'Route cache — common paths resolve instantly from precomputed results.',
+        ],
+        st:'Vite · React · TypeScript · MediaWiki API.'},
+      {nm:'Meme Maker',         g:'browser meme editor',  m:2, k:'demo', cx:885, cy:120, url:D+'/meme-generator', src:GH+'/meme-generator', img:'/screenshots/meme-generator.webp',
+        d:'Build a meme in the browser — pick a template or drop in your own image, caption it, and download a clean PNG.',
+        hi:[
+          'Canvas renderer — top/bottom captions with font size, color, stroke and shadow controls.',
+          'Your image or a template — start from the built-in library or upload anything.',
+          'No backend — everything renders client-side; no uploads, no watermark.',
+        ],
+        st:'React · TypeScript · Vite · HTML Canvas.'},
+      {nm:'Auto Applier',       g:'job-apply agent',      m:2, k:'src',  cx:740, cy:160, src:GH+'/auto-applier',
+        d:'Text a job link to a Telegram bot and an agent reads the posting, fills out the application, and submits it.',
+        hi:[
+          'Claude Code + Playwright — parses the posting, completes the form, and auto-submits clear fits.',
+          'Human in the loop — borderline matches come back to you for a quick yes / no.',
+          'Profile-driven — one profile.yaml supplies the answers; runs on a $6/mo droplet.',
+        ],
+        st:'Claude Code · Playwright · Telegram · DigitalOcean. Built on Claude Bot.'},
+      {nm:'Clocktower ST',      g:'BotC storyteller tool',m:2, k:'demo', cx:935, cy:210, url:D+'/clocktower', src:GH+'/clocktower', img:'/screenshots/clocktower.webp',
+        d:"A Storyteller's control panel for Blood on the Clocktower — runs setup, night order, and voting so you can focus on the table.",
+        hi:[
+          'Full game loop — role assignment, script selection, night reminders, nominations, votes and executions.',
+          'Player board — alive / dead, ghost votes, and private notes at a glance.',
+          'Event log + undo — timestamped history with 20 steps of undo.',
+        ],
+        st:'React · TypeScript · Vite · Zustand. Trouble Brewing, Sects & Violets, Bad Moon Rising + custom scripts.'},
+      {nm:'Nuzlocke',           g:'Pokémon run tracker',  m:3, k:'demo', cx:515, cy:265, url:D+'/nuzlocke-tracker', src:GH+'/nuzlocke-tracker', img:'/screenshots/nuzlocke-tracker.webp',
+        d:'Track a Pokémon Nuzlocke run end to end — every encounter, your living team, and the graveyard.',
+        hi:[
+          'Encounters & team — log each route\'s catch, manage your active six, move the fallen to the graveyard.',
+          'Progress — badge bar, boss prep, and a shiny log.',
+          'Built-in dex — Pokémon search, move autocomplete, and type badges.',
+        ],
+        st:'React · TypeScript · Vite.'},
+      {nm:'Connections Maker',  g:'word-puzzle builder',  m:3, k:'demo', cx:680, cy:280, url:D+'/connections-maker', src:GH+'/connections-maker', img:'/screenshots/connections-maker.webp',
+        d:'Build your own NYT Connections-style puzzle and share it with a single link.',
+        hi:[
+          'Four groups of four — set the words, category labels, and difficulty colors.',
+          'Link is the database — the whole puzzle lives in the URL hash; no account, no backend.',
+          'Auto-shortened — built-in TinyURL with a fallback.',
+        ],
+        st:'React · TypeScript · Vite.'},
+      {nm:'Game of Life',       g:'cellular automaton',   m:3, k:'demo', cx:585, cy:325, url:D+'/game-of-life', src:GH+'/game-of-life', img:'/screenshots/game-of-life.webp',
+        d:"Conway's Game of Life, running at up to 60 generations a second on a wrap-around canvas.",
+        hi:[
+          'Paint & play — drag to draw cells; play, pause, step, randomize, clear.',
+          'Pattern library — drop in a Glider, Gosper gun, Pulsar and more.',
+          'Fast — Uint8Array grid with a scratch buffer; live FPS, generation, and cell counts.',
+        ],
+        st:'Vite · React · TypeScript · Tailwind · Canvas.'},
+      {nm:'Birthday Paradox',   g:'probability visualizer',m:3,k:'demo', cx:830, cy:340, url:D+'/birthday-paradox', src:GH+'/birthday-paradox', img:'/screenshots/birthday-paradox.webp',
+        d:'See why 23 people is enough to share a birthday — the theory and a live simulation, side by side.',
+        hi:[
+          'Theory curve — plots P(shared) for groups of 1–100, with the 50% crossover at 23 marked.',
+          'Monte Carlo — runs up to 100,000 trials, chunked so the UI never stalls, and converges on the math.',
+          'Calendar view — a random sample with collision days lit up.',
+        ],
+        st:'Vite · React · TypeScript · Tailwind · Recharts.'},
+      {nm:'Claude Bot',         g:'Telegram → Claude',    m:1, k:'priv', cx:935, cy:295,
+        d:'A self-hosted relay that turns Telegram into a remote terminal for Claude Code — the harness that built most of this sky.',
+        hi:[
+          'Phone to agent — a message spawns Claude Code in a chosen workspace and streams the replies back.',
+          'Workspace-agnostic — any project directory; Auto Applier is just one tenant.',
+          'Self-hosted — deploys over SSH to a private server.',
+        ],
+        st:'Node · Telegram Bot API · Claude Code.'},
     ],
     // The Builder's Loom — outer frame (top beam, posts, bottom beam) + inner warp threads
     edges:[[0,1],[1,2],[2,4],[4,8],[8,7],[7,0],[1,3],[3,6],[6,5],[5,7],[6,8]],
@@ -52,20 +122,29 @@ const CONSTELLATIONS = [
     labelAt:[765, 405], box:[490, 380, 980, 700],
     figure:[{label:"The Merchant's Scale", x:735, y:560}],
     stars:[
-      {nm:'Web Presence',       g:'sites for shops',      m:1, k:'service', cx:560, cy:475, url:'/business/', d:'Websites for local businesses — built, hosted, and maintained.'},
-      {nm:'Email & Domains',    g:'set up, handed off',   m:2, k:'service', cx:830, cy:655, url:'/business/', d:'Email setup and domain administration for small businesses.'},
-      {nm:'Reviews',            g:'reputation',           m:3, k:'service', cx:735, cy:445, url:'/business/', d:'Google review auto-reply, drafted by AI in your voice.'},
-      {nm:'grace-style',        g:'a client',             m:2, k:'src',     cx:885, cy:550, src:GH+'/grace-style', d:'A client build. (Source repo — confirm the public URL before linking it live.)'},
-      {nm:'contact-relay',      g:'the plumbing',         m:4, k:'src',     cx:570, cy:650, src:GH+'/contact-relay', d:"A Cloudflare Worker relaying this site's contact form to Telegram. The plumbing behind the curtain."},
+      {nm:'Web Presence',       g:'local business sites', m:1, k:'service', cx:560, cy:475, url:'/business/',
+        d:'Websites for local businesses — designed, built, hosted, and kept up to date.'},
+      {nm:'Email & Domains',    g:'set up, handed off',   m:2, k:'service', cx:830, cy:655, url:'/business/',
+        d:'Domain registration, DNS, and professional email set up and handed off, so a shop owns its own name.'},
+      {nm:'Review Replies',     g:'AI review replies',    m:3, k:'service', cx:735, cy:445, url:'/business/',
+        d:'AI-drafted responses to Google reviews, written in the business\'s own voice to keep the reply rate up.'},
+      {nm:'grace-style',        g:'color + style tool',   m:2, k:'src',     cx:885, cy:550, src:GH+'/grace-style',
+        d:'Upload a portrait and get a personalized 12-season color analysis — palette, hair, and makeup direction — from Claude vision.',
+        hi:[
+          'Vision analysis — shells out to the Claude CLI to read a portrait and place it in a 12-season system.',
+          'Private by default — results live in your browser\'s localStorage; nothing is stored server-side.',
+        ],
+        st:'React · Vite · TypeScript · Tailwind · Express (Claude CLI).'},
     ],
-    // The Merchant's Scale — fulcrum (Reviews) over a beam, two pans hanging
-    edges:[[2,0],[2,3],[0,4],[3,1]],
+    // The Merchant's Scale — fulcrum (Review Replies) over a beam, two pans, one weight
+    edges:[[2,0],[2,3],[3,1]],
     conj:[] },
 ];
 
 const KIND_LABEL = {
   demo:    'Live · open to the public',
   src:     'Source only · no public demo',
+  priv:    'Private · self-hosted, no public repo',
   work:    'Day job · no public link',
   service: 'Service offering',
 };
@@ -206,7 +285,8 @@ function buildConstellation(c, cam, onStarClick){
   c.stars.forEach((s,i)=>{
     const left = labelLeft[i];
     const sg = document.createElementNS(SVGNS,'g');
-    sg.setAttribute('class','star m'+s.m+(s.k==='src'?' src':'')+(left?' right':' left'));
+    const hollow = (s.k==='src'||s.k==='priv');
+    sg.setAttribute('class','star m'+s.m+(hollow?' src':'')+(left?' right':' left'));
     sg.setAttribute('role','link'); sg.setAttribute('tabindex','0');
     sg.setAttribute('aria-label', s.nm+' — '+s.g);
     sg.dataset.i=i;
@@ -216,7 +296,7 @@ function buildConstellation(c, cam, onStarClick){
     hit.setAttribute('class','hit'); hit.setAttribute('cx',s.cx); hit.setAttribute('cy',s.cy); hit.setAttribute('r','18');
     sg.appendChild(hit);
 
-    if(s.k==='src'){
+    if(hollow){
       const r = document.createElementNS(SVGNS,'circle');
       r.setAttribute('class','ring'); r.setAttribute('cx',s.cx); r.setAttribute('cy',s.cy);
       r.setAttribute('r', radiusFor(s.m));
@@ -298,7 +378,9 @@ function ensureCard(){
     <h2></h2>
     <div class="sub"></div>
     <p class="desc"></p>
+    <img class="shot" alt="" loading="lazy">
     <ul class="hi"></ul>
+    <div class="stack"></div>
     <div class="links"></div>
     <div class="kind"></div>
   </div>`;
@@ -324,9 +406,24 @@ function openCard(s, greek){
   o.querySelector('h2').textContent = s.nm;
   o.querySelector('.sub').textContent = s.g;
   o.querySelector('.desc').textContent = s.d || '';
+  // lead with the artifact: a screenshot when we have one
+  const shot = o.querySelector('.shot');
+  if(s.img){ shot.src = s.img; shot.alt = s.nm + ' screenshot'; shot.style.display=''; }
+  else { shot.removeAttribute('src'); shot.style.display='none'; }
+  // "how it works" — bullets whose label (before the em dash) reads bold
   const hi = o.querySelector('.hi'); hi.innerHTML = '';
-  if(s.hi && s.hi.length){ hi.style.display=''; s.hi.forEach(x=>{const li=document.createElement('li'); li.textContent=x; hi.appendChild(li);}); }
-  else hi.style.display='none';
+  if(s.hi && s.hi.length){
+    hi.style.display='';
+    s.hi.forEach(x=>{
+      const li=document.createElement('li');
+      const i = x.indexOf(' — ');
+      if(i>0){ const b=document.createElement('strong'); b.textContent=x.slice(0,i); li.appendChild(b); li.appendChild(document.createTextNode(x.slice(i))); }
+      else li.textContent=x;
+      hi.appendChild(li);
+    });
+  } else hi.style.display='none';
+  const stack = o.querySelector('.stack');
+  if(s.st){ stack.textContent = s.st; stack.style.display=''; } else stack.style.display='none';
   const links = o.querySelector('.links'); links.innerHTML = '';
   if(s.url){links.innerHTML += `<a href="${s.url}" target="_blank" rel="noopener" data-umami-event="card-link" data-umami-event-target="${s.nm}-demo">visit ↗</a>`;}
   if(s.src){links.innerHTML += `<a href="${s.src}" target="_blank" rel="noopener" data-umami-event="card-link" data-umami-event-target="${s.nm}-src">source ↗</a>`;}
