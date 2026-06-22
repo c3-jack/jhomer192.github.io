@@ -439,6 +439,44 @@ function closeCard(){
   if(lastFocused && lastFocused.focus){ lastFocused.focus(); lastFocused = null; }
 }
 
+// ---------- keyboard / navigation help (toggled with ?) ----------
+let helpOverlay = null, helpLastFocused = null;
+function ensureHelp(){
+  if(helpOverlay) return helpOverlay;
+  helpOverlay = document.createElement('div');
+  helpOverlay.className = 'card-overlay help-overlay';
+  helpOverlay.innerHTML = `<div class="card help" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <button class="close" aria-label="close">esc · close</button>
+    <h2 id="help-title">Finding your way</h2>
+    <dl class="shortcuts">
+      <dt>Click a constellation</dt><dd>zoom into it</dd>
+      <dt>Click a star</dt><dd>open its write-up</dd>
+      <dt><kbd>&larr;</kbd><kbd>&rarr;</kbd><kbd>&uarr;</kbd><kbd>&darr;</kbd></dt><dd>move between stars</dd>
+      <dt><kbd>Enter</kbd> / <kbd>Space</kbd></dt><dd>open the focused star or constellation</dd>
+      <dt><kbd>Esc</kbd></dt><dd>close a card, or zoom back out</dd>
+      <dt><kbd>?</kbd></dt><dd>show this help</dd>
+    </dl>
+  </div>`;
+  document.body.appendChild(helpOverlay);
+  helpOverlay.addEventListener('click', e=>{ if(e.target===helpOverlay) closeHelp(); });
+  helpOverlay.querySelector('.close').addEventListener('click', closeHelp);
+  helpOverlay.addEventListener('keydown', e=>{ if(e.key==='Escape'){ e.stopPropagation(); closeHelp(); } });
+  return helpOverlay;
+}
+function openHelp(){
+  const o = ensureHelp();
+  helpLastFocused = document.activeElement;
+  o.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  o.querySelector('.close').focus();
+}
+function closeHelp(){
+  if(helpOverlay) helpOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+  if(helpLastFocused && helpLastFocused.focus){ helpLastFocused.focus(); helpLastFocused = null; }
+}
+function toggleHelp(){ (helpOverlay && helpOverlay.classList.contains('open')) ? closeHelp() : openHelp(); }
+
 // ---------- ambience, instruments & almanac (overview only) ----------
 function moonPhase(date){
   const SYN=29.530588853, ref=Date.UTC(2000,0,6,18,14)/86400000, now=date.getTime()/86400000;
@@ -669,4 +707,13 @@ window.renderSky = function(opts){
       nodes[focus].node.classList.add('lit','entered');
     });
   }
+
+  // '?' toggles the keyboard/navigation help on any chart page (ignore while typing)
+  document.addEventListener('keydown', e=>{
+    if(e.key !== '?') return;
+    const t = document.activeElement;
+    if(t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+    e.preventDefault();
+    toggleHelp();
+  });
 };
